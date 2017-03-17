@@ -1,0 +1,28 @@
+#packs/my-chatops/aliases/docker/history.yaml
+---
+name: "history"
+pack: "my-docker"
+action_ref: "my-docker.docker"
+description: "Execute a docker history on remote host via SSH."
+formats:
+  - display: "docker history image_name:<image> on <host>"
+    representation:
+      - ".*docker.*history.*images?.*name ?:? ?{{image_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=history}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*history.*docker.*images?.*name ?:? ?{{image_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=history}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}                       

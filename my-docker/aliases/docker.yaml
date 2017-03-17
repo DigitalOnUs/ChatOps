@@ -1,0 +1,33 @@
+# packs/my-chatops/aliases/docker/docker.yaml
+---
+name: "docker"
+pack: "my-docker"
+action_ref: "core.remote_sudo"
+description: "Execute a docker command on a remote host via SSH."
+formats:
+  - display: "list docker images | containers | info on <host>"
+    representation:
+      - ".*list.*docker.*images? .*(on|for) {{hosts}} .* {{cmd=docker images}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*list.*images?.*docker .*(on|for) {{hosts}}  .*{{cmd=docker images}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*list.*docker.*containers? .*(on|for) {{hosts}} .* {{cmd=docker ps}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*list.*containers?.* docker .*(on|for) {{hosts}} .*{{cmd=docker ps}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*docker.*info .*(on|for) {{hosts}} .* {{cmd=docker info}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".* info.* docker .*(on|for) {{hosts}} .* {{cmd=docker info}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}
+

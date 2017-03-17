@@ -1,0 +1,27 @@
+#packs/my-chatops/aliases/docker/pull.yaml
+---
+name: "pull"
+pack: "my-docker"
+action_ref: "my-docker.docker"
+description: "Execute docker pull on remote host via SSH."
+formats:
+  - display: "docker pull image name:<container> on <host>"
+    representation:
+      - ".*docker.*pull.*images?.*name ?(:|is|-|=)? ?{{image_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=pull}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*pull.*docker.*images?.*name ?(:|is|-|=)? ?{{image_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=pull}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

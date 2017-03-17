@@ -1,0 +1,27 @@
+# packs/my-chatops/aliases/get_users.yaml
+---
+name: "get_users"
+action_ref: "core.remote_sudo"
+description: "Get users connected to a host"
+formats:
+  - display: "get users on {{hosts}}"
+    representation:
+      - "get users {{cmd=netstat -tnpa | grep 'ESTABLISHED.*sshd'}} on {{hosts}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout: 
+               {{execution.result[host].stdout}}
+           ---> stderr: 
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }} 
+   {% endif %}
+

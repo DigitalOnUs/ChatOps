@@ -1,0 +1,29 @@
+---
+name: 'docker'
+runner_type: 'remote-shell-cmd'
+description: 'Action to execute docker commands'
+enabled: true
+entry_point: ''
+parameters:
+  options:
+    description: 'Additional docker options | Optional'
+    required: false
+    type: string
+  container_name:
+    description: 'Name of the container | Optional'
+    required: false
+    type: string
+  image_name:
+    description: 'Name of the docker image | Optional'
+    required: false
+    type: string
+  sub_cmd:
+    description: 'Docker sub-command'
+    required: false
+    type: string
+  cmd:
+    immutable: true
+    default: 'docker {{sub_cmd}} {% if options %} -{{options}} {% endif %} {% if container_name %} {{container_name}} {% endif %} {% if image_name %}{{image_name}} {% endif %}'
+  sudo:
+    default: true
+    immutable: true

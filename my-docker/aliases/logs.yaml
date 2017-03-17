@@ -1,0 +1,27 @@
+#packs/my-chatops/aliases/docker/logs.yaml
+---
+name: "logs"
+pack: "my-docker"
+action_ref: "my-docker.docker"
+description: "Execute docker logs on remote host via SSH."
+formats:
+  - display: "docker logs container name:<container> on <host>"
+    representation:
+      - ".*docker.*logs?.*container.*name ?(:|is|-|=)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=logs}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*logs?.*docker.*container.*name ?(:|is|-|=)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=logs}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

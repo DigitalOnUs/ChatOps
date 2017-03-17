@@ -1,0 +1,29 @@
+#packs/my-chatops/aliases/docker/remove.yaml
+---
+name: "remove"
+pack: "my-docker"
+action_ref: "my-docker.docker"
+description: "Execute a docker rm/rmi on remote host via SSH."
+formats:
+  - display: "docker remove image/container name:<image/container> on <host> | default option = f (force remove)"
+    representation:
+      - ".*docker.*remove.*images?.*name ?(:|is|=|-)? ?{{image_name}} .*(on|for|from) {{hosts}} .*/? {{sub_cmd=rmi}} {{options=f}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*remove.*docker.*images?.*name ?(:|is|=|-)? ?{{image_name}} .*(on|for|from) {{hosts}} .*/? {{sub_cmd=rmi}} {{options=f}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*docker.*remove.*containers?.*name ?(:|is|=|-)? ?{{container_name}} .*(on|for|from) {{hosts}} .*/? {{sub_cmd=rm}} {{options=f}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - ".*remove.*docker.*containers?.*name ?(:|is|=|-)? ?{{container_name}} .*(on|for|from) {{hosts}} .*/? {{sub_cmd=rm}} {{options=f}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

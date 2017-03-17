@@ -1,0 +1,29 @@
+# packs/my-docker/aliases/docker_run.yaml
+---
+name: "docker_run"
+pack: "my-docker"
+action_ref: "my-docker.docker_run"
+description: "Execute a docker run on remote host via SSH."
+formats:
+  - display: "docker run options: {{options}} container_name: {{container_name}} image_name: {{image_name}} hosts: {{hosts}"
+    representation:
+      - "docker run options ?: ?{{options}} container_name ?: ?{{container_name}} image_name ?: ?{{image_name}} hosts ?: ?{{hosts}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}
+
+

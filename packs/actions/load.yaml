@@ -1,0 +1,16 @@
+---
+  name: "load"
+  runner_type: "python-script"
+  description: "Action that reloads all st2 content."
+  enabled: true
+  entry_point: "pack_mgmt/register.py"
+  parameters:
+    register:
+      type: "string"
+      default: "actions,aliases,sensors,triggers"
+      description: "Possible options are all, sensors, actions, rules, aliases, triggers, configs."
+    packs:
+      type: "array"
+      description: "A list of packs to register / load resources from."
+      items:
+        type: "string"
