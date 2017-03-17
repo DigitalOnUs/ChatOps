@@ -23,7 +23,7 @@ parameters:
     type: string
   cmd:
     immutable: true
-    default: 'docker {{sub_cmd}} {% if options %} -{{options}} {% endif %} {% if container_name %} {{container_name}} {% endif %} {% if image_name %}{{image_name}} {% endif %}'
+    default: 'docker {{sub_cmd}} {% if options %} {{options}} {% endif %} {% if container_name %} {{container_name}} {% endif %} {% if image_name %}{{image_name}} {% endif %}'
   sudo:
     default: true
     immutable: true

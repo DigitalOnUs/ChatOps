@@ -1,0 +1,30 @@
+#packs/my-chatops/aliases/docker/run.yaml
+---
+name: 'run'
+pack: 'my-docker'
+action_ref: 'my-docker.docker'
+description: 'Execute docker run on remote host via SSH.'
+formats:
+  - display: 'docker run container name:<container> options:<options> on <host>'
+    representation:
+      - '.*docker.*run.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*options ?(:|is|=|-|are)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .*{{sub_cmd=run}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*run.*docker.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*options ?(:|is|=|-|are)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .*{{sub_cmd=run}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - ".*run.*docker.*containers?.*name ?(:|is|=|-|as)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=run}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - '.*docker.*run.*containers?.*name ?(:|is|=|-|as)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=run}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == "succeeded" %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}
+

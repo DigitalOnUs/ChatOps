@@ -1,0 +1,21 @@
+---
+name: 'docker_group'
+runner_type: 'remote-shell-cmd'
+description: 'Action to execute docker group commands'
+enabled: true
+entry_point: ''
+parameters:
+  group_name:
+    description: 'Name of the docker group'
+    required: true
+    type: string
+  sub_cmd:
+    description: 'Docker sub-command'
+    required: true
+    type: string
+  cmd:
+    immutable: true
+    default: 'docker {{sub_cmd}} $(docker ps -q --filter ancestor={{group_name}})'
+  sudo:
+    default: true
+    immutable: true

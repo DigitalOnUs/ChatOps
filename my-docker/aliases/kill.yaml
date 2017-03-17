@@ -1,20 +1,22 @@
 #packs/my-chatops/aliases/docker/kill.yaml
 ---
-name: "kill"
-pack: "my-docker"
-action_ref: "my-docker.docker"
-description: "Execute docker kill on remote host via SSH."
+name: 'kill'
+pack: 'my-docker'
+action_ref: 'my-docker.docker'
+description: 'Execute docker kill on remote host via SSH.'
 formats:
-  - display: "docker kill container_name:<container> on <host>"
+  - display: 'docker kill container name:<container> options:<options> on <host>'
     representation:
-      - ".*docker.*kill.*containers?.*name ?:? ?{{container_name}} .*(on|for|from) {{hosts}} .*? {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
-      - ".*kill.*docker.*containers?.*name ?:? ?{{container_name}} .*(on|for|from) {{hosts}} .*? {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}"
+      - '.*docker.*kill.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*kill.*docker.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*(on|for|from) {{hosts}} .* {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*docker.*kill.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*options ?(:|is|=|-|are|as)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*kill.*docker.*containers?.*name ?(:|is|as|=|-)? ?{{container_name}} .*options ?(:|is|=|-|are|as)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=kill}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'      
 result:
   format: |
    Status : {{ execution.status }}
 
    Results:
-   {% if execution.status == "succeeded" %}
+   {% if execution.status == 'succeeded' %}
         {% for host in execution.result %}
            Host: *{{host}}*
            ---> stdout:
