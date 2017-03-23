@@ -1,0 +1,34 @@
+# packs/my-kubernetes/aliases/get_nodes.yaml
+---
+name: 'get_nodes'
+pack: 'my-kubernetes'
+action_ref: 'my-kubernetes.kubernetes'
+description: 'Execute a kubernetes get command on a remote host via SSH.'
+formats:
+  - display: 'list kubernetes nodes options:<options> on <host>'
+    representation:
+
+      - '.*list.*kubernetes.*nodes?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*nodes?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*kubernetes.*nodes?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"?  .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*nodes?.*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"?  .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

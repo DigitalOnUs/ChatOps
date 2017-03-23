@@ -1,0 +1,29 @@
+# packs/my-kubernetes/aliases/exec_pod.yaml
+---
+name: 'exec_pod'
+pack: 'my-kubernetes'
+action_ref: 'my-kubernetes.kubernetes'
+description: 'Execute a kubernetes exec command on a remote host via SSH.'
+formats:
+  - display: 'execute|exec kubernetes pod name:<name> options:<options> on <host>'
+    representation:
+      - '.*(exec|execute).*kubernetes.*pods?.*name ?(:|is|-|=|as)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=exec}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*(exec|execute).*pods?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=exec}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

@@ -1,0 +1,33 @@
+# packs/my-kubernetes/aliases/create_namespace.yaml
+---
+name: 'create_namespace'
+pack: 'my-kubernetes'
+action_ref: 'my-kubernetes.kubernetes'
+description: 'Execute a kubernetes create namespace command on a remote host via SSH.'
+formats:
+  - display: 'create kubernetes namespace name:<name> options:<options> on <host>'
+    representation:
+
+      - '.*create.*kubernetes.*(env|environment|namespace).*name ?(:|is|as|=|-)? ?{{resource}} .*(on|for|from) {{hosts}} .* {{sub_cmd=create namespace}}  {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*create.*(env|environment|namespace).*kubernetes.*name ?(:|is|as|=|-)? ?{{resource}} .*(on|for|from) {{hosts}} .* {{sub_cmd=create namespace}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*create.*kubernetes.*(env|environment|namespace).*name ?(:|is|as|=|-)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=create namespace}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*create.*(env|environment|namespace).*kubernetes.*name ?(:|is|as|=|-)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=create namespace}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

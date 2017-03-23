@@ -4,4 +4,7 @@ pack: "my-chatops"
 action_ref: "core.remote"
 description: "Execute a command on a remote host via SSH."
 formats:
-  - "run {{cmd}} on {{hosts}}"
+  - display: 'run <cmd> on <hosts>'
+    representation:
+
+      - 'run {{cmd}} (on|for|from) {{hosts}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'

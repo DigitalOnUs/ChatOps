@@ -1,0 +1,24 @@
+---
+name: 'kubernetes'
+runner_type: 'remote-shell-cmd'
+description: 'Action to execute kubernetes commands'
+enabled: true
+entry_point: ''
+parameters:
+  options:
+    description: 'Additional docker options | Optional'
+    required: false
+    type: string
+  resource:
+    description: 'Name of the resource'
+    required: true
+    type: string
+  sub_cmd:
+    description: 'Kubernetes sub-command'
+    required: true
+    type: string
+  cmd:
+    immutable: true
+    default: 'kubectl {{sub_cmd}} {{resource}} {% if options %} {{options}} {% endif %} '
+  sudo:
+    default: true
