@@ -1,0 +1,37 @@
+version: '2.0'
+
+my-chatops.server_info:
+    description: A basic workflow that runs an arbitrary linux command.
+    type: direct
+    input:
+        - hosts
+    tasks:
+        OS_details:
+            action: core.remote_sudo
+            input:
+                cmd: 'lsb_release -a'
+                hosts: <% hosts %>
+            on-success: Arch_details
+            on-failure: Arch_details
+        
+        Arch_details:
+            action: core.remote_sudo
+            input:
+                cmd: 'uname -i'
+                hosts: <% hosts %>
+            on-success: mem_details
+            on-failure: mem_details
+        
+        mem_details:
+            action: core.remote_sudo
+            input:
+                cmd: 'free -m | grep -B1 "Mem:"'
+                hosts: <% hosts %>
+            on-failure: ip_details
+            on-success: ip_details
+        
+        ip_details:
+            action: core.remote_sudo
+            input:
+                cmd: 'ifconfig'
+                hosts: <% hosts  %>

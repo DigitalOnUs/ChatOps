@@ -1,0 +1,11 @@
+---
+name: 'server_info'
+runner_type: 'remote-shell-script'
+description: 'Action to retrieve server info'
+enabled: true
+entry_point: 'scripts/get_server_info.sh'
+parameters:
+#  directory:
+#    default: 'scripts/get_server_info.sh'
+  sudo:
+    default: true

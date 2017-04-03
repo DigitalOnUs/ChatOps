@@ -8,13 +8,13 @@ formats:
   - display: 'list kubernetes nodes options:<options> on <host>'
     representation:
 
-      - '.*list.*kubernetes.*nodes?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*kubernetes.*nodes?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*nodes?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*nodes?.*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*kubernetes.*nodes?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"?  .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*kubernetes.*nodes?.*(on|for|from) {{hosts}} .*{{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*nodes?.*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"?  .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*nodes?.*kubernetes.*(on|for|from) {{hosts}} .*{{sub_cmd=get}} {{resource=nodes}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
 result:
   format: |

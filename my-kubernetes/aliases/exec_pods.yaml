@@ -7,9 +7,9 @@ description: 'Execute a kubernetes exec command on a remote host via SSH.'
 formats:
   - display: 'execute|exec kubernetes pod name:<name> options:<options> on <host>'
     representation:
-      - '.*(exec|execute).*kubernetes.*pods?.*name ?(:|is|-|=|as)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=exec}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*(exec|execute).*kubernetes.*pods?.*name ?(:|is|-|=|as)? ?{{resource_name}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .*{{sub_cmd=exec}} {{arg=bash}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*(exec|execute).*pods?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=exec}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*(exec|execute).*pods?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource_name}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .*{{sub_cmd=exec}} {{arg=bash}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
 result:
   format: |

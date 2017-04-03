@@ -6,19 +6,27 @@ enabled: true
 entry_point: ''
 parameters:
   options:
-    description: 'Additional docker options | Optional'
+    description: 'Additional kubernetes options | Optional'
+    required: false
+    type: string
+  resource_name:
+    description: 'Name of the resource'
     required: false
     type: string
   resource:
     description: 'Name of the resource'
-    required: true
+    required: false
     type: string
   sub_cmd:
     description: 'Kubernetes sub-command'
     required: true
     type: string
+  arg:
+    description: 'Additional kubernetes arg | Optional'
+    required: false
+    type: string
   cmd:
     immutable: true
-    default: 'kubectl {{sub_cmd}} {{resource}} {% if options %} {{options}} {% endif %} '
+    default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_name %}{{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %}"
   sudo:
     default: true

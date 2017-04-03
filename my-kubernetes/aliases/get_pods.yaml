@@ -8,13 +8,13 @@ formats:
   - display: 'list kubernetes pods options:<options> on <host>'
     representation:
 
-      - '.*list.*kubernetes.*pods?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
-
-      - '.*list.*pods?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
-
       - '.*list.*kubernetes.*pods?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
       - '.*list.*pods?.*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*kubernetes.*pods?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*pods?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 result:
   format: |
    Status : {{ execution.status }}
