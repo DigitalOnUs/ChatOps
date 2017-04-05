@@ -1,0 +1,34 @@
+# packs/my-kubernetes/aliases/rollback_deployment.yaml
+---
+name: 'rollback_deployment'
+pack: 'my-kubernetes'
+action_ref: 'my-kubernetes.kubernetes'
+description: 'Execute a kubernetes rollback command on a remote host via SSH.'
+formats:
+  - display: 'rollback|undo kubernetes deployment options:<options> on <host>'
+    representation:
+
+      - '.*(rollback|undo).*kubernetes.*deployments?.*name ?(:|is|-|=|as)? ?{{resource_name}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=rollout undo}} {{resource=deployments}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*(rollback|undo).*deployments?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource_name}} .*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=rollout undo}} {{resource=deployments}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*(rollback|undo).*kubernetes.*deployments?.*name ?(:|is|-|=|as)? ?{{resource_name}} .*(on|for|from) {{hosts}} .*{{sub_cmd=rollout undo}} {{resource=deployments}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*(rollback|undo).*deployments?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource_name}} .*(on|for|from) {{hosts}} .*{{sub_cmd=rollout undo}} {{resource=deployments}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

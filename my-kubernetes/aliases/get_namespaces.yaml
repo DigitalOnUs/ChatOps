@@ -8,13 +8,13 @@ formats:
   - display: 'list kubernetes namespaces options:<options> on <host>'
     representation:
 
-      - '.*list.*kubernetes.*namespaces?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .* (on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*kubernetes.*(namespaces?|env|environment).*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .* (on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*namespaces?.*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*(namespaces?|env|environment).*kubernetes.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*kubernetes.*namespaces?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*kubernetes.*(namespaces?|env|environment).*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
-      - '.*list.*namespaces?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+      - '.*list.*(namespaces?|env|environment).*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=namespaces}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
 
 result:
   format: |
@@ -30,6 +30,5 @@ result:
                {{execution.result[host].stderr}}
         {% endfor %}
    {% else %}
-      {{ execution.result }}
+     {{ execution.result }}
    {% endif %}
-
