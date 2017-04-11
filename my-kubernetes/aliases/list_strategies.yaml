@@ -1,0 +1,29 @@
+# packs/my-kubernetes/aliases/deploy_pod.yaml
+---
+name: 'list_strategies'
+pack: 'my-kubernetes'
+action_ref: 'core.remote_sudo'
+description: 'Execute a kubernetes create command on a remote host via SSH.'
+formats:
+  - display: 'show|display|list kubernetes deployment strategies name: <file_name.yaml> on <host>'
+    representation:
+
+      - '.*(show|display|list).*kubernetes.*deployment (strategy|strategies?).*(on|for|from) {{hosts}} .* {{cmd=ls}} {{cwd=/kubernetes/deployments/}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*(show|display|list).*deployment (strategy|strategies?).*kubernetes.*(on|for|from) {{hosts}} .* {{cmd=ls}} {{cwd=/kubernetes/deployments/}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

@@ -14,7 +14,11 @@ parameters:
     required: false
     type: string
   resource:
-    description: 'Name of the resource'
+    description: 'Resource Type'
+    required: false
+    type: string
+  resource_param:
+    description: 'Resource parameters'
     required: false
     type: string
   sub_cmd:
@@ -25,8 +29,12 @@ parameters:
     description: 'Additional kubernetes arg | Optional'
     required: false
     type: string
+  extra_arg:
+    description: 'Additional kubernetes extra arg | Optional'
+    required: false
+    type: string  
   cmd:
     immutable: true
-    default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_name %}{{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %}"
+    default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_param %} {{resource_param}} {% endif %} {% if resource_name %} {{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %} {% if extra_arg %} {{extra_arg}} {% endif %}"
   sudo:
     default: true

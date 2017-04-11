@@ -30,4 +30,6 @@ result:
    {% else %}
       {{ execution.result }}
    {% endif %}
-
+extra:
+  security:
+    twofactor: true
