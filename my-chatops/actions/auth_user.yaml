@@ -1,0 +1,11 @@
+---
+name: "auth_user"
+runner_type: "python-script"
+description: "Print message to standard output."
+enabled: true
+entry_point: "auth_user.py"
+parameters:
+    message:
+        type: "string"
+        description: "Message to print."
+        required: true

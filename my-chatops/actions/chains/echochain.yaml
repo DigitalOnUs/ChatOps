@@ -1,0 +1,14 @@
+---
+    chain:
+        -
+            name: "c1"
+            ref: "vault.read"
+            parameters:
+                path: "secret/demo"
+            on-success: "c2"
+            on-failure: "c2"
+        -
+            name: "c2"
+            ref: "core.local"
+            parameters:
+                cmd: "echo {{c1.result}}" # refers upsteram action parameter

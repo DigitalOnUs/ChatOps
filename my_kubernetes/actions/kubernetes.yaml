@@ -1,0 +1,40 @@
+---
+name: 'kubernetes'
+runner_type: 'remote-shell-cmd'
+description: 'Action to execute kubernetes commands'
+enabled: true
+entry_point: ''
+parameters:
+  options:
+    description: 'Additional kubernetes options | Optional'
+    required: false
+    type: string
+  resource_name:
+    description: 'Name of the resource'
+    required: false
+    type: string
+  resource:
+    description: 'Resource Type'
+    required: false
+    type: string
+  resource_param:
+    description: 'Resource parameters'
+    required: false
+    type: string
+  sub_cmd:
+    description: 'Kubernetes sub-command'
+    required: true
+    type: string
+  arg:
+    description: 'Additional kubernetes arg | Optional'
+    required: false
+    type: string
+  extra_arg:
+    description: 'Additional kubernetes extra arg | Optional'
+    required: false
+    type: string  
+  cmd:
+    #immutable: true
+    default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_param %} {{resource_param}} {% endif %} {% if resource_name %} {{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %} {% if extra_arg %} {{extra_arg}} {% endif %}"
+  sudo:
+    default: true

@@ -1,0 +1,31 @@
+
+# packs/my-kubernetes/aliases/scale.yaml
+---
+name: 'scale'
+pack: 'my_kubernetes'
+action_ref: 'my_kubernetes.scale'
+description: 'Execute a kubernetes scale command on a remote host via SSH.'
+formats:
+  - display: 'scale kubernetes deployment name:<name> replicas:<number> on <host>'
+    representation:
+
+      - '.*scale.*kubernetes.*deployments?.*name ?(:|is|-|=|as)? ?{{resource_name}} .*replicas? ?(is|as|are|=|-|:)? ?"?{{replicas}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=scale}} {{resource=deployment}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*scale.*deployments?.*kubernetes.*name ?(:|is|-|=|as)? ?{{resource_name}} .*replicas? ?(is|as|are|=|-|:)? ?"?{{replicas}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=scale}} {{resource=deployment}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

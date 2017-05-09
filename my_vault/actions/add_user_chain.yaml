@@ -1,0 +1,31 @@
+---
+# Action definition metadata
+name: "add_user_chain"
+description: "Simple Action Chain workflow"
+
+# `runner_type` has value `action-chain` to identify that action is an ActionChain.
+runner_type: "action-chain"
+
+# `entry_point` path to the ActionChain definition file, relative to the pack's action directory.
+entry_point: "chains/add_user_chain.yaml"
+
+enabled: true
+parameters:
+  new_user:
+    description: 'new user'
+    required: false
+    type: string
+#  users_list:
+#    description: 'list of current users'
+#    required: false
+#    type: "object"
+#  path:
+#    description: 'vault path'
+#    required: false
+#    type: string
+#  values:
+#    description: 'values to store in vault'
+#    required: false
+#    type: string
+
+

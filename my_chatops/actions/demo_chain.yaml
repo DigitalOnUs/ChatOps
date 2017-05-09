@@ -1,0 +1,6 @@
+---
+
+name: "demo_chain"
+description: "Simple Action Chain workflow"
+runner_type: "action-chain"
+entry_point: "chains/demo_chain.yaml"

@@ -1,0 +1,27 @@
+---
+    vars:
+        my_action: "k8s"
+    chain:
+        -
+            name: "task1"
+            ref: "core.local"
+            parameters:
+                cmd: "echo task1"
+            on-success: "task2"
+        -
+            name: "task2"
+            ref: "core.local"
+            parameters:
+                cmd: "echo task2"
+            on-success: "{% if my_action == 'k8s' %}task3 {%else%} task4 {%endif%} "
+
+        -
+            name: "task3"
+            ref: "my_chatops.task3_chain"
+            on-success: "task4"
+            on-failure: "task4"
+        -
+            name: "task4"
+            ref: "core.local"
+            parameters:
+                cmd: "echo task4"

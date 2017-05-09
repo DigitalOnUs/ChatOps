@@ -1,0 +1,31 @@
+---
+    chain:
+        -
+            name: "read_users_list"
+            ref: "vault.read"
+            parameters:
+                path: "secret/demo"
+            on-success: "add_user"
+        -
+            name: "add_user"
+            ref: "my_vault.add_user"
+            parameters:
+                users_list: "{{read_users_list.result}}"
+                new_user: "{{new_user}}"
+            on-success: "vault_add"
+#        -
+#            name: "vault_add"
+#            ref: "vault.write"
+#            parameters:
+#                values: "{{add_user.result}}"
+#                path: "secret/demo"
+
+#        - 
+#           name: "kubernetes"
+#           ref: "my_kubernetes.kubernetes"
+#           parameters:
+#                username: "{{username}}"
+#                private_key: "{{private_key}}"
+#                hosts: "{{hosts}}"
+#                sub_cmd: "{{sub_cmd}}"
+#                cmd: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_param %} {{resource_param}} {% endif %} {% if resource_name %} {{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %} {% if extra_arg %} {{extra_arg}} {% endif %}"

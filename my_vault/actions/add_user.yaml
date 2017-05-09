@@ -1,0 +1,16 @@
+---
+name: "add_user"
+runner_type: "python-script"
+description: "Print message to standard output."
+enabled: true
+entry_point: "add_user.py"
+parameters:
+    users_list:
+        type: "object"
+        description: "vault users list"
+        required: false
+    new_user:
+        type: "string"
+        description: "User to add"
+        required: false
+        #default: "{{action_context.parent.api_user}}"

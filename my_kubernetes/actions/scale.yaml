@@ -1,0 +1,32 @@
+---
+name: 'scale'
+runner_type: 'remote-shell-cmd'
+description: 'Action to execute kubernetes scale commands'
+enabled: true
+entry_point: ''
+parameters:
+  options:
+    description: 'Additional kubernetes options | Optional'
+    required: false
+    type: string
+  resource_name:
+    description: 'Name of the resource'
+    required: false
+    type: string
+  resource:
+    description: 'Name of the resource'
+    required: false
+    type: string
+  sub_cmd:
+    description: 'Kubernetes sub-command'
+    required: true
+    type: string
+  replicas:
+    description: 'replicas'
+    required: true
+    type: string
+  cmd:
+    immutable: true
+    default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_name %}{{resource_name}}{% endif %} --replicas={{replicas}} {% if options %} {{options}} {% endif %}"
+  sudo:
+    default: true
