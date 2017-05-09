@@ -2,8 +2,8 @@
 # packs/my-kubernetes/aliases/scale.yaml
 ---
 name: 'scale'
-pack: 'my-kubernetes'
-action_ref: 'my-kubernetes.scale'
+pack: 'my_kubernetes'
+action_ref: 'my_kubernetes.scale'
 description: 'Execute a kubernetes scale command on a remote host via SSH.'
 formats:
   - display: 'scale kubernetes deployment name:<name> replicas:<number> on <host>'

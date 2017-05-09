@@ -34,7 +34,7 @@ parameters:
     required: false
     type: string  
   cmd:
-    immutable: true
+    #immutable: true
     default: "kubectl {{sub_cmd}} {% if resource %} {{resource}} {% endif %} {% if resource_param %} {{resource_param}} {% endif %} {% if resource_name %} {{resource_name}}{% endif %} {%if arg %} {{arg}}  {% endif %} {% if options %} {{options}} {% endif %} {% if extra_arg %} {{extra_arg}} {% endif %}"
   sudo:
     default: true

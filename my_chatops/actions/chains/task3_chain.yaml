@@ -1,0 +1,7 @@
+---
+    chain:
+        -
+            name: "taskn"
+            ref: "core.local"
+            parameters:
+                cmd: "echo from task3 chain"

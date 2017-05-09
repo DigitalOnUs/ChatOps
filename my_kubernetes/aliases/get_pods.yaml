@@ -1,0 +1,33 @@
+# packs/my-kubernetes/aliases/get_pods.yaml
+---
+name: 'get_pods'
+pack: 'my_kubernetes'
+action_ref: 'my_kubernetes.security_chain'
+description: 'Execute a kubernetes get command on a remote host via SSH.'
+formats:
+  - display: 'list kubernetes pods options:<options> on <host>'
+    representation:
+
+      - '.*list.*pods?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}}'
+
+#      - '.*list.*pods?.*options ?(is|as|are|=|-|:)? ?"?{{options}}"? .*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+
+      - '.*list.*pods?.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}}'
+
+#      - '.*list.*pods?.*kubernetes.*(on|for|from) {{hosts}} .* {{sub_cmd=get}} {{resource=pods,services}} {{private_key=/home/ubuntu/aws_keys/Hum_do.pem}} {{username=ubuntu}}'
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

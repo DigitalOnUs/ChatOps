@@ -1,0 +1,21 @@
+---
+    chain:
+        -
+            name: "read_users_list"
+            ref: "vault.read"
+            parameters:
+                path: "secret/demo"
+            on-success: "auth_user"
+            on-failure: "auth_user"
+#        -
+#            name: "auth_user"
+#            ref: "core.local"
+#            parameters:
+#                cmd: "echo {{read_users_list.result}}"
+        -
+           name: "auth_user"
+           ref: "my_chatops.auth_user"
+           parameters:
+                users_list: "{{read_users_list.result|safe}}"
+                #parameters:
+                #cmd: "echo {{c1.result}}" # refers upsteram action parameter

@@ -1,0 +1,28 @@
+# packs/my_chatops/aliases/auth_user.yaml
+---
+name: 'auth_user'
+pack: 'my_chatops'
+action_ref: 'my_chatops.security_chain'
+description: 'Authenticate a user'
+formats:
+  - display: 'Auth me'
+    representation:
+
+      - 'auth me.*'
+
+result:
+  format: |
+   Status : {{ execution.status }}
+
+   Results:
+   {% if execution.status == 'succeeded' %}
+        {% for host in execution.result %}
+           Host: *{{host}}*
+           ---> stdout:
+               {{execution.result[host].stdout}}
+           ---> stderr:
+               {{execution.result[host].stderr}}
+        {% endfor %}
+   {% else %}
+      {{ execution.result }}
+   {% endif %}

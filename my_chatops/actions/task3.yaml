@@ -1,0 +1,6 @@
+---
+
+name: "task3_chain"
+description: "Simple Action Chain workflow"
+runner_type: "action-chain"
+entry_point: "chains/task3_chain.yaml"
